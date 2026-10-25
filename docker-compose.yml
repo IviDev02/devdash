@@ -1,0 +1,15 @@
+services:
+  devdash:
+    build: .
+    restart: unless-stopped
+    ports:
+      # Solo accesible desde tu ordenador: el dashboard puede parar contenedores
+      - "127.0.0.1:${PORT:-4100}:4100"
+    environment:
+      GITHUB_USER: ${GITHUB_USER:-IviDev02}
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+      READONLY: ${READONLY:-false}
+      DOCKER_MODE: docker
+    volumes:
+      # Acceso al Docker del host para leer el estado de los contenedores
+      - /var/run/docker.sock:/var/run/docker.sock
